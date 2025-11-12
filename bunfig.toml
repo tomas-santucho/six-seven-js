@@ -1,0 +1,7 @@
+[test]
+preload = []
+
+[install]
+peer = true
+
+scripts = true

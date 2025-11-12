@@ -1,0 +1,40 @@
+{
+  "name": "six-seven-js",
+  "version": "1.0.0",
+  "description": "A brain rot meme package for checking if numbers are six or seven. Because why not?",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "bin": {
+    "six-seven": "dist/cli.js"
+  },
+  "scripts": {
+    "build": "bun build:tsc",
+    "build:tsc": "tsc",
+    "prepublishOnly": "bun run build",
+    "test": "bun run build && bun test",
+    "test:node": "echo '⚠️  Still using Node? How 2020 of you... 🐌' && npm run build && node --test dist/test/**/*.test.js"
+  },
+  "keywords": [
+    "six-seven",
+    "meme",
+    "brain-rot",
+    "utility",
+    "silly",
+    "6-7",
+    "fun"
+  ],
+  "author": "Tomas Santucho",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "typescript": "^5.0.0"
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tomas-santucho/six-seven-js.git"
+  }
+}
