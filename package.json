@@ -1,6 +1,6 @@
 {
   "name": "six-seven-js",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A brain rot meme package for checking if numbers are six or seven. Because why not?",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
