@@ -7,55 +7,45 @@ import {
   setMemeMode
 } from '../index';
 
-test('sixSevenify should return "6-7" for any input in normal mode', () => {
-  expect(sixSevenify(42)).toBe('6-7');
+test('sixSevenify should return "67" for any input in normal mode', () => {
+  expect(sixSevenify(42)).toBe('67');
 });
 
-test('sixSevenify should return "6-7" for string input', () => {
-  expect(sixSevenify('hello')).toBe('6-7');
+test('sixSevenify should return "67" for string input', () => {
+  expect(sixSevenify('hello')).toBe('67');
 });
 
-test('sixSevenify should return "6-7" for null', () => {
-  expect(sixSevenify(null)).toBe('6-7');
+test('sixSevenify should return "67" for null', () => {
+  expect(sixSevenify(null)).toBe('67');
 });
 
-test('sixSevenify should return "SIX-SEVEN!!" in meme mode', () => {
+test('sixSevenify should return "SIXTY-SEVEN!!" in meme mode', () => {
   setMemeMode(true);
-  expect(sixSevenify(42)).toBe('SIX-SEVEN!!');
-  setMemeMode(false); 
+  expect(sixSevenify(42)).toBe('SIXTY-SEVEN!!');
+  setMemeMode(false);
 });
 
-test('toSixSeven should return "< 6" for numbers less than 6', () => {
-  expect(toSixSeven(5)).toBe('< 6');
-  expect(toSixSeven(0)).toBe('< 6');
-  expect(toSixSeven(-10)).toBe('< 6');
+test('toSixSeven should return "< 67" for numbers less than 67', () => {
+  expect(toSixSeven(5)).toBe('< 67');
+  expect(toSixSeven(0)).toBe('< 67');
+  expect(toSixSeven(-10)).toBe('< 67');
+  expect(toSixSeven(66)).toBe('< 67');
 });
 
-test('toSixSeven should return "6" for 6', () => {
-  expect(toSixSeven(6)).toBe('6');
+test('toSixSeven should return "67" for 67', () => {
+  expect(toSixSeven(67)).toBe('67');
 });
 
-test('toSixSeven should return "7" for 7', () => {
-  expect(toSixSeven(7)).toBe('7');
+test('toSixSeven should return "67+" for numbers greater than 67', () => {
+  expect(toSixSeven(68)).toBe('67+');
+  expect(toSixSeven(100)).toBe('67+');
 });
 
-test('toSixSeven should return "6-7+" for numbers greater than 7', () => {
-  expect(toSixSeven(8)).toBe('6-7+');
-  expect(toSixSeven(100)).toBe('6-7+');
-});
-
-test('toSixSeven should return "6-7" for 6.5', () => {
-  expect(toSixSeven(6.5)).toBe('6-7');
-});
-
-test('randomSixSeven should return either 6 or 7', () => {
-  const results = new Set();
+test('randomSixSeven should return 67', () => {
   for (let i = 0; i < 100; i++) {
     const result = randomSixSeven();
-    results.add(result);
-    expect(result === 6 || result === 7).toBe(true);
+    expect(result).toBe(67);
   }
-  expect(results.has(6) || results.has(7)).toBe(true);
 });
 
 test('whySixSeven should return a string', () => {

@@ -1,6 +1,6 @@
 # six-seven-js
 
-> A brain rot meme package for JavaScript. Because sometimes you just need to know if a number is six or seven.
+> A brain rot meme package for JavaScript. Because sometimes you just need to know if a number is sixty-seven.
 
 [![npm version](https://img.shields.io/npm/v/six-seven-js.svg)](https://www.npmjs.com/package/six-seven-js)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
@@ -30,71 +30,75 @@ bunx six-seven 7
 ## Usage
 
 ```javascript
-import { isSixSeven, sixSevenify, randomSixSeven, whySixSeven } from 'six-seven-js';
+import { isSixSeven, sixSevenify, randomSixSeven, whySixSeven, playSixSevenSound } from 'six-seven-js';
 
-// Check if a value is literally 6 or 7
-isSixSeven(6);        // true
-isSixSeven(7);        // true
-isSixSeven(5);        // false
-isSixSeven('6-7');    // true
-isSixSeven(6.5);      // false
+// Check if a value is literally 67
+isSixSeven(67);       // true
+isSixSeven('67');     // true
+isSixSeven(6);        // false
+isSixSeven(7);        // false
+isSixSeven(67.5);     // false
 
-// Transform anything into "6-7"
-sixSevenify(123);     // "6-7"
-sixSevenify("hello"); // "6-7"
+// Transform anything into "67"
+sixSevenify(123);     // "67"
+sixSevenify("hello"); // "67"
 
-// Get a random six or seven
-randomSixSeven();     // 6 or 7
+// Get 67
+randomSixSeven();     // 67
 
 // Learn about the meme
 whySixSeven();        // "Because Skrilla said so in 'Doot Doot (6 7)'"
+
+// Play the six-seven sound (works on all platforms)
+await playSixSevenSound();
 ```
 
 ## API
 
 ### `isSixSeven(value: any): boolean`
-Check if a value is literally 6 or 7 (or current variant).
+Check if a value is literally 67 (or current variant).
 
 **Aliases:** `is67`, `sixSevenCheck`
 
 ```javascript
-isSixSeven(6);    // true
-isSixSeven(7);    // true
+isSixSeven(67);   // true
 isSixSeven('67'); // true
+isSixSeven(6);    // false
+isSixSeven(7);    // false
 ```
 
 ### `isSixSevenish(value: any, tolerance?: number): boolean`
-Check if a value is approximately 6 or 7.
+Check if a value is approximately 67.
 
 ```javascript
-isSixSevenish(6.3);     // true (within default 0.5 tolerance)
-isSixSevenish(7.4);     // true
-isSixSevenish(8, 1.5);  // true (custom tolerance)
+isSixSevenish(67.3);     // true (within default 0.5 tolerance)
+isSixSevenish(66.7);     // true
+isSixSevenish(68, 1.5);  // true (custom tolerance)
 ```
 
 ### `sixSevenify(value: any): string`
-Transform any value into "6-7" (because memes).
+Transform any value into "67" (because memes).
 
 ```javascript
-sixSevenify(42);        // "6-7"
-sixSevenify("anything"); // "6-7"
+sixSevenify(42);         // "67"
+sixSevenify("anything"); // "67"
 ```
 
 ### `toSixSeven(value: number): string`
-Convert a number to six-seven format.
+Convert a number to sixty-seven format.
 
 ```javascript
-toSixSeven(5);   // "< 6"
-toSixSeven(6);   // "6"
-toSixSeven(7);   // "7"
-toSixSeven(10);  // "6-7+"
+toSixSeven(5);   // "< 67"
+toSixSeven(66);  // "< 67"
+toSixSeven(67);  // "67"
+toSixSeven(100); // "67+"
 ```
 
 ### `randomSixSeven(): number`
-Returns either 6 or 7 randomly.
+Returns 67.
 
 ```javascript
-randomSixSeven(); // 6 or 7
+randomSixSeven(); // 67
 ```
 
 ### `whySixSeven(): string`
@@ -104,6 +108,13 @@ Get a random fact about the six-seven meme.
 whySixSeven(); // "LaMelo Ball is 6'7" tall - coincidence? Maybe."
 ```
 
+### `playSixSevenSound(): Promise<void>`
+Play the six-seven sound effect. Works cross-platform on browsers, Node.js, and Bun.
+
+```javascript
+await playSixSevenSound(); // Plays the sound
+```
+
 ### Variant Support
 
 Support other viral number memes:
@@ -111,19 +122,19 @@ Support other viral number memes:
 ```javascript
 import { variant, isSixSeven } from 'six-seven-js';
 
-// Switch to "41" variant
-variant.set('41');
-isSixSeven(41);  // true now
+// Switch to "42" variant
+variant.set('42');
+isSixSeven(42);  // true now
+isSixSeven(67);  // false
 
-// Use custom variants
-variant.set([4, 20]);
-isSixSeven(420); // false
-isSixSeven(4);   // true
-isSixSeven(20);  // true
+// Use custom number variants
+variant.set(420);
+isSixSeven(420); // true
+isSixSeven(67);  // false
 
 // Reset to default
 variant.reset();
-isSixSeven(6);   // true again
+isSixSeven(67);  // true again
 ```
 
 ### Meme Mode
@@ -134,23 +145,23 @@ ENABLE MAXIMUM ENERGY:
 import { setMemeMode, sixSevenify } from 'six-seven-js';
 
 setMemeMode(true);
-sixSevenify(123); // "SIX-SEVEN!!"
+sixSevenify(123); // "SIXTY-SEVEN!!"
 
 setMemeMode(false);
-sixSevenify(123); // "6-7"
+sixSevenify(123); // "67"
 ```
 
 ## CLI
 
 ```bash
-npx six-seven 6
+npx six-seven 67
 # Output: SIX-SEVEN!! ✨
 
-npx six-seven 8
+npx six-seven 6
 # Output: Not six-seven 😢
 
 npx six-seven random
-# Output: 7 (or 6)
+# Output: 67
 
 npx six-seven why
 # Output: Because Skrilla said so in "Doot Doot (6 7)"
@@ -160,8 +171,8 @@ npx six-seven why
 
 - It's silly and fun
 - Makes devs laugh
-- Good for toy logic in apps/games where "6-7" has meaning
-- Lightweight
+- Good for toy logic in apps/games where "67" has meaning
+- Lightweight with sound support
 - Practice publishing packages
 - Because brain rot culture is undefeated
 

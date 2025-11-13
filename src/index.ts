@@ -3,27 +3,29 @@
  * Inspired by the viral "six seven" meme from Skrilla's "Doot Doot (6 7)"
  */
 
+import {ExecException} from "node:child_process";
+
 /**
  * Variant state for alternative meme numbers
  */
-let currentVariant: number[] = [6, 7];
+let currentVariant: number = 67;
 let memeMode = false;
 
 /**
- * Check if a value is literally 6 or 7 (or current variant)
+ * Check if a value is literally 67 (or current variant)
  * @param value - The value to check
- * @returns true if value is six or seven
+ * @returns true if value is sixty-seven
  */
 export function isSixSeven(value: any): boolean {
   if (typeof value === 'string') {
     const cleaned = value.trim();
-    if (cleaned === '6-7' || cleaned === '67') {
+    if (cleaned === '67') {
       return true;
     }
   }
 
   const num = typeof value === 'number' ? value : parseFloat(value);
-  return !isNaN(num) && currentVariant.includes(num);
+  return !isNaN(num) && num === currentVariant;
 }
 
 /**
@@ -33,50 +35,46 @@ export const is67 = isSixSeven;
 export const sixSevenCheck = isSixSeven;
 
 /**
- * Check if a value is approximately 6 or 7
+ * Check if a value is approximately 67
  * @param value - The value to check
  * @param tolerance - How close the value needs to be (default: 0.5)
- * @returns true if value is close to six or seven
+ * @returns true if value is close to sixty-seven
  */
 export function isSixSevenish(value: any, tolerance: number = 0.5): boolean {
   const num = typeof value === 'number' ? value : parseFloat(value);
   if (isNaN(num)) return false;
 
-  return currentVariant.some(target =>
-    Math.abs(num - target) <= tolerance
-  );
+  return Math.abs(num - currentVariant) <= tolerance;
 }
 
 /**
- * Transform any value into "6-7" because memes
- * @param value - Any value to transform
- * @returns "6-7" or "SIX-SEVEN!!" in meme mode
+ * Transform any value into "67" because memes
+ * @param _ - Any value to transform
+ * @returns "67" or "SIXTY-SEVEN!!" in meme mode
  */
-export function sixSevenify(value: any): string {
-  const result = '6-7';
-  return memeMode ? 'SIX-SEVEN!!' : result;
+export function sixSevenify(_: any): string {
+  const result = '67';
+  return memeMode ? 'SIXTY-SEVEN!!' : result;
 }
 
 /**
- * Convert a number to six-seven format
+ * Convert a number to sixty-seven format
  * @param value - Number to convert
- * @returns String representation in six-seven format
+ * @returns String representation in sixty-seven format
  */
 export function toSixSeven(value: number): string {
-  if (value < 6) return '< 6';
-  if (value === 6) return '6';
-  if (value === 7) return '7';
-  if (value > 7) return '6-7+';
-  return '6-7';
+  if (value < 67) return '< 67';
+  if (value === 67) return '67';
+  if (value > 67) return '67+';
+  return '67';
 }
 
 /**
- * Returns either 6 or 7 randomly
- * @returns 6 or 7
+ * Returns 67
+ * @returns 67
  */
 export function randomSixSeven(): number {
-  const [first, second] = currentVariant;
-  return Math.random() < 0.5 ? first : second;
+  return currentVariant;
 }
 
 /**
@@ -100,53 +98,32 @@ export function whySixSeven(): string {
  */
 export const variant = {
   /**
-   * Set a new variant (e.g., '41' for the follow-up meme)
-   * @param values - Array of numbers or a string like '41'
+   * Set a new variant (e.g., '42' for alternative number)
+   * @param value - A number or string representing the variant
    */
-  set(values: number[] | string): void {
-    if (typeof values === 'string') {
-      // Parse strings like '41' or '6-7'
-      if (values.includes('-')) {
-        // Handle hyphenated format like "6-7"
-        const parts = values.split('-').map(Number);
-        currentVariant = parts.filter(n => !isNaN(n));
-      } else if (values.length === 2 && values[0] !== '0') {
-        // Two-character strings like "41" are treated as meme variants [4, 1]
-        // (but "01" or similar would be treated as single numbers)
-        const digits = values.split('').map(Number);
-        if (digits.every(n => !isNaN(n))) {
-          currentVariant = digits;
-        } else {
-          // If not all digits, parse as single number
-          const num = parseInt(values);
-          if (!isNaN(num)) {
-            currentVariant = [num];
-          }
-        }
-      } else {
-        // Any other string: parse as a single number
-        const num = parseInt(values);
-        if (!isNaN(num)) {
-          currentVariant = [num];
-        }
+  set(value: number | string): void {
+    if (typeof value === 'string') {
+      const num = parseInt(value);
+      if (!isNaN(num)) {
+        currentVariant = num;
       }
     } else {
-      currentVariant = values;
+      currentVariant = value;
     }
   },
 
   /**
    * Get current variant
    */
-  get(): number[] {
-    return [...currentVariant];
+  get(): number {
+    return currentVariant;
   },
 
   /**
-   * Reset to default (6, 7)
+   * Reset to default (67)
    */
   reset(): void {
-    currentVariant = [6, 7];
+    currentVariant = 67;
   }
 };
 
@@ -163,6 +140,50 @@ export function setMemeMode(enabled: boolean): void {
  */
 export function isMemeMode(): boolean {
   return memeMode;
+}
+
+/**
+ * Play the six-seven sound effect
+ * Works cross-platform (browser, Node.js, Bun)
+ */
+export async function playSixSevenSound(): Promise<void> {
+  const soundPath = require('path').join(__dirname, 'sounds', '2354b92d-941b-4d61-a7f1-04f19efbd837.wav');
+
+  if (typeof window !== 'undefined' && typeof Audio !== 'undefined') {
+    try {
+      const audio = new Audio(soundPath);
+      await audio.play();
+    } catch (err) {
+      console.error('Failed to play sound in browser:', err);
+    }
+    return;
+  }
+
+  if (typeof process !== 'undefined') {
+    const { exec } = require('child_process');
+    const { platform } = process;
+
+    let command: string;
+
+    if (platform === 'darwin') {
+      command = `afplay "${soundPath}"`;
+    } else if (platform === 'win32') {
+      command = `powershell -c (New-Object Media.SoundPlayer "${soundPath}").PlaySync()`;
+    } else {
+      command = `aplay "${soundPath}" 2>/dev/null || paplay "${soundPath}" 2>/dev/null || ffplay -nodisp -autoexit "${soundPath}" 2>/dev/null`;
+    }
+
+    return new Promise<void>((resolve) => {
+      exec(command, (error: ExecException | null) => {
+        if (error) {
+          console.error('Failed to play sound:', error.message);
+        }
+        resolve();
+      });
+    });
+  }
+
+  console.warn('Audio playback not supported in this environment');
 }
 
 export {
@@ -187,5 +208,6 @@ export default {
   whySixSeven,
   variant,
   setMemeMode,
-  isMemeMode
+  isMemeMode,
+  playSixSevenSound
 };
