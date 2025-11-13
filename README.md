@@ -3,6 +3,7 @@
 > A brain rot meme package for JavaScript. Because sometimes you just need to know if a number is sixty-seven.
 
 [![npm version](https://img.shields.io/npm/v/six-seven-js.svg)](https://www.npmjs.com/package/six-seven-js)
+![npm downloads](https://img.shields.io/npm/dm/six-seven-js)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 🐰 **Powered by Bun**
